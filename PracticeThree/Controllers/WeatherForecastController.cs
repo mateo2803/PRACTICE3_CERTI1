@@ -4,7 +4,7 @@ using UPB.PracticeThree.Models;
 namespace UPB.PracticeThree.Controllers;
 
 [ApiController]
-[Route("[controller]")]
+[Route("patients")]
 public class PatientController : ControllerBase
 {
     public PatientController()
@@ -18,14 +18,15 @@ public class PatientController : ControllerBase
     }
 
     [HttpGet]
-    [Route("ci")]
+    [Route("{ci}")]
     public Patient GetByCI([FromRoute] int ci)
     {
         return new Patient();
     }
 
     [HttpPut]
-    public Patient Put()
+    [Route("{ci}")]
+    public Patient Put([FromRoute] int ci)
     {
         return new Patient();
     }

@@ -34,6 +34,7 @@ builder.Services.AddSwaggerGen(options =>
     });
 });
 
+// build app
 var app = builder.Build();
 
 app.UseSwagger();
@@ -48,4 +49,6 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();
+
+// Run app
 app.Run();
