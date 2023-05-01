@@ -1,32 +1,37 @@
 using Microsoft.AspNetCore.Mvc;
+using UPB.PracticeThree.Models;
 
-namespace PracticeTwo.Controllers;
+namespace UPB.PracticeThree.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class WeatherForecastController : ControllerBase
+public class PatientController : ControllerBase
 {
-    private static readonly string[] Summaries = new[]
+    public PatientController()
     {
-        "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-    };
-
-    private readonly ILogger<WeatherForecastController> _logger;
-
-    public WeatherForecastController(ILogger<WeatherForecastController> logger)
-    {
-        _logger = logger;
     }
 
-    [HttpGet(Name = "GetWeatherForecast")]
-    public IEnumerable<WeatherForecast> Get()
+    [HttpGet]
+    public List<Patient> Get()
     {
-        return Enumerable.Range(1, 5).Select(index => new WeatherForecast
-        {
-            Date = DateTime.Now.AddDays(index),
-            TemperatureC = Random.Shared.Next(-20, 55),
-            Summary = Summaries[Random.Shared.Next(Summaries.Length)]
-        })
-        .ToArray();
+        return new List<Patient>();
+    }
+
+    [HttpPut]
+    public Patient Put()
+    {
+        return new Patient();
+    }
+
+    [HttpPost]
+    public Patient Post()
+    {
+        return new Patient();
+    }
+
+    [HttpDelete]
+    public Patient Delete()
+    {
+        return new Patient();
     }
 }
