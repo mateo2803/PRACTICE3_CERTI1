@@ -17,6 +17,13 @@ public class PatientController : ControllerBase
         return new List<Patient>();
     }
 
+    [HttpGet]
+    [Route("ci")]
+    public Patient GetByCI([FromRoute] int ci)
+    {
+        return new Patient();
+    }
+
     [HttpPut]
     public Patient Put()
     {
