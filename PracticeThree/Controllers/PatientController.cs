@@ -9,41 +9,41 @@ namespace UPB.PracticeThree.Controllers;
 public class PatientController : ControllerBase
 {
 
-    private PatientManager _patientmanager;
+    private PatientManager _patientManager;
     public PatientController()
     {
-        _patientmanager = new PatientManager();
+        _patientManager = new PatientManager();
     }
 
     [HttpGet]
     public List<Patient> Get()
     {
-        return _patientmanager.GetAll();
+        return _patientManager.GetAll();
     }
 
     [HttpGet]
     [Route("{ci}")]
     public Patient GetByCI([FromRoute] int ci)
     {
-        return _patientmanager.GetByCI(ci);
+        return _patientManager.GetByCI(ci);
     }
 
     [HttpPut]
     [Route("{ci}")]
     public Patient Put([FromRoute] int ci)
     {
-        return _patientmanager.Update(ci);
+        return _patientManager.Update(ci);
     }
 
     [HttpPost]
-    public Patient Post()
+    public Patient Post([FromBody]Patient patientToCreate)
     {
-        return _patientmanager.Create();
+        return _patientManager.Create(patientToCreate.Name, patientToCreate.LastName, patientToCreate.CI);
     }
 
     [HttpDelete]
-    public Patient Delete()
+    public Patient Delete([FromRoute] int id)
     {
-        return _patientmanager.Delete();
+        return _patientManager.Delete(id);
     }
 }
