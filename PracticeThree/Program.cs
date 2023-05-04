@@ -1,5 +1,6 @@
 using Microsoft.OpenApi.Models;
 using Serilog;
+using UPB.PracticeThree.Managers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +13,9 @@ builder.Host.UseSerilog();
 
 // Add services to the container.
 builder.Services.AddControllers();
+
+// Singleton vs Transient vs Scoped
+ builder.Services.AddSingleton<PatientManager>();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
