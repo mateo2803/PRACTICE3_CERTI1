@@ -1,6 +1,6 @@
-using UPB.PracticeThree.Models;
+using UPB.CoreLogic.Models;
 
-namespace UPB.PracticeThree.Managers;
+namespace UPB.CoreLogic.Managers;
 
 public class PatientManager 
 {
