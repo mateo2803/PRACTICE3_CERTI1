@@ -24,7 +24,7 @@ public class PatientManager
     {
         if (ci < 0)
         {
-            throw new Exception("CI invalido");
+            throw new Exception("Invalid CI");
         }
 
         Patient patientFound;
@@ -32,9 +32,9 @@ public class PatientManager
 
         if (patientFound == null)
         {
-            throw new Exception("no se encontro un estudiante");
+            throw new Exception("Patient not found");
         }
-        patientFound.Name = "Cambiado";
+        patientFound.Name = "Updated";
 
         return patientFound;
     }
