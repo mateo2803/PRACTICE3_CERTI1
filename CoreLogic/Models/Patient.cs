@@ -7,4 +7,5 @@ public class Patient
     public String? LastName { get; set; }
 
     public int CI { get; set; }
+    public string? Bi { get; set; }
 }

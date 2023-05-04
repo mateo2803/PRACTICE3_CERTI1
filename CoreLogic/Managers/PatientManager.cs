@@ -1,10 +1,11 @@
 using UPB.CoreLogic.Models;
-
+using System;
 namespace UPB.CoreLogic.Managers;
 
 public class PatientManager 
 {
     private List<Patient> _patients;
+
     public PatientManager()
     {
         _patients = new List<Patient>();
@@ -40,15 +41,22 @@ public class PatientManager
 
     public Patient Create(string name, string lastname, int ci)
     {
+        string[] tiposDeSangre = { "A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-" };
+        Random random = new Random();
+        int randomIndex = random.Next(tiposDeSangre.Length);
+        string randomChoice = tiposDeSangre[randomIndex];
+        
         Patient createdPatient = new Patient()
         {
             Name = name,
             LastName = lastname,
-            CI = ci
+            CI = ci,
+            Bi = randomChoice
         };
         _patients.Add(createdPatient);
         return createdPatient;
     }
+
 
     public Patient Delete (int ci)
     {
