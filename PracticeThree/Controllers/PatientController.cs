@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using UPB.CoreLogic.Managers;
 using UPB.CoreLogic.Models;
 
+
 namespace UPB.PracticeThree.Controllers;
 
 [ApiController]
@@ -38,7 +39,9 @@ public class PatientController : ControllerBase
     [HttpPost]
     public Patient Post([FromBody]Patient patientToCreate)
     {
-        return _patientManager.Create(patientToCreate.Name, patientToCreate.LastName, patientToCreate.CI);
+        Patient createdPatient = _patientManager.Create(patientToCreate.Name, patientToCreate.LastName, patientToCreate.CI);
+         WritePatientsToFile(_patientManager.GetAll());
+         return createdPatient;
     }
 
     [HttpDelete]
@@ -46,4 +49,47 @@ public class PatientController : ControllerBase
     {
         return _patientManager.Delete(id);
     }
+
+    private const string filePath = "/Users/mateo/Downloads/patients.txt";
+
+    private void WritePatientsToFile(IEnumerable<Patient> patients)
+    {
+        using (StreamWriter sw = new StreamWriter(filePath))
+        {
+            foreach (Patient p in patients)
+            {
+                string line = $"{p.Name},{p.LastName},{p.CI},{p.Bi}";
+                sw.WriteLine(line);
+                Console.WriteLine("archivo creado");
+            }
+        }
+    }
+
+    private List<Patient> ReadPatientsFromFile()
+    {
+        List<Patient> patients = new List<Patient>();
+        if (!System.IO.File.Exists(filePath))
+        {
+            return patients;
+        }
+
+        using (StreamReader sr = new StreamReader(filePath))
+        {
+            string line;
+            while ((line = sr.ReadLine()) != null)
+            {
+                string[] parts = line.Split(',');
+                Patient p = new Patient()
+                {
+                    Name = parts[0],
+                    LastName = parts[1],
+                    CI = int.Parse(parts[2]),
+                    Bi = parts[3]
+                };
+                patients.Add(p);
+            }
+        }
+
+        return patients;
+}
 }

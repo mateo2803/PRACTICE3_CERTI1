@@ -1,6 +1,10 @@
 using UPB.CoreLogic.Models;
 using System;
+using System.IO;
+using System.Collections.Generic;
+
 namespace UPB.CoreLogic.Managers;
+
 
 public class PatientManager 
 {
@@ -54,9 +58,9 @@ public class PatientManager
             Bi = randomChoice
         };
         _patients.Add(createdPatient);
+
         return createdPatient;
     }
-
 
     public Patient Delete (int ci)
     {
@@ -64,5 +68,49 @@ public class PatientManager
         Patient patientToDelete = _patients[patientToDeleteIndex];
         _patients.RemoveAt(patientToDeleteIndex);
         return patientToDelete;
+    }
+
+    public void SaveToDisk()
+    {
+        string path = "patients.txt";
+        using (StreamWriter writer = new StreamWriter(path))
+        {
+            foreach (Patient patient in _patients)
+            {
+                string line = string.Join(",", patient.Name, patient.LastName, patient.CI, patient.Bi);
+                writer.WriteLine(line);
+            }
+        }
+    }
+
+    public void LoadFromDisk()
+    {
+        string path = "patients.txt";
+        if (!File.Exists(path))
+        {
+            // The file doesn't exist, there are no patients to load
+            return;
+        }
+
+        using (StreamReader reader = new StreamReader(path))
+        {
+            while (!reader.EndOfStream)
+            {
+                string line = reader.ReadLine();
+                string[] parts = line.Split(',');
+                string name = parts[0];
+                string lastName = parts[1];
+                int ci = int.Parse(parts[2]);
+                string bi = parts[3];
+
+                _patients.Add(new Patient
+                {
+                    Name = name,
+                    LastName = lastName,
+                    CI = ci,
+                    Bi = bi
+                });
+            }
+        }
     }
 }
